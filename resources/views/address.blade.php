@@ -1,6 +1,14 @@
 @extends('include/layout')
 
 @section('content')
+    <style>
+        .error {
+            font-size: 14px;
+            color: red;
+            font-weight: 700;
+            font-style: italic;
+        }
+    </style>
     <div class="page-content bg-white">
         <!-- inner page banner -->
         <div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner1.jpg);">
@@ -14,7 +22,7 @@
         <div class="breadcrumb-row">
             <div class="container">
                 <ul class="list-inline">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li>Address</li>
                 </ul>
             </div>
@@ -56,6 +64,10 @@
                                                             <div class="col-12 col-sm-8 col-md-8 col-lg-7">
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $item->address }}" name="address">
+                                                                @if ($errors->has('address'))
+                                                                    <span
+                                                                        class="error">{{ $errors->first('address') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -64,6 +76,9 @@
                                                             <div class="col-12 col-sm-8 col-md-8 col-lg-7">
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $item->city }}" name="city">
+                                                                @if ($errors->has('city'))
+                                                                    <span class="error">{{ $errors->first('city') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -72,6 +87,10 @@
                                                             <div class="col-12 col-sm-8 col-md-8 col-lg-7">
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $item->state }}" name="state">
+                                                                @if ($errors->has('state'))
+                                                                    <span
+                                                                        class="error">{{ $errors->first('state') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
@@ -80,6 +99,10 @@
                                                             <div class="col-12 col-sm-8 col-md-8 col-lg-7">
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $item->pincode }}" name="pincode">
+                                                                @if ($errors->has('pincode'))
+                                                                    <span
+                                                                        class="error">{{ $errors->first('pincode') }}</span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>

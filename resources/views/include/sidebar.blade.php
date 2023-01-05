@@ -3,8 +3,8 @@
         <img src="assets/images/profile/pic1.jpg" alt="" />
     </div>
     <div class="profile-info">
-        <h4><%= data.getName() %></h4>
-        <span><%= data.getEmail() %></span>
+        <h4>{{ Auth::user()->name }}</h4>
+        <span>{{ Auth::user()->email }}</span>
     </div>
     <div class="profile-tabnav">
         <ul class="nav nav-tabs">

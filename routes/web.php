@@ -17,9 +17,9 @@ Route::post("/login", [UserController::class, "doLogin"]);
 
 Route::get("/register", [UserController::class, "register"]);
 
-Route::get("/logout", [UserController::class, "logout"]);
-
 Route::post("/register", [UserController::class, "doRegister"]);
+
+Route::get("/logout", [UserController::class, "logout"]);
 
 Route::get("/error", [UserController::class, "error"]);
 
@@ -41,6 +41,8 @@ Route::get("/change_pass", [UserController::class, "change_pass"]);
 
 Route::get("/profile", [UserController::class, "profile"]);
 
+Route::post("/profile", [UserController::class, "updateProfile"]);
+
 Route::get("/enrolled_courses", [UserController::class, "enrolled_courses"]);
 
 Route::post("/contact", [UserController::class, "saveContact"]);
@@ -50,3 +52,6 @@ Route::post("/saveCart", [UserController::class, "saveCart"]);
 Route::post("/updateAddress/{id}", [UserController::class, "updateAddress"]);
 
 Route::post("/updateAddress/{id}", [UserController::class, "updateAddress"]);
+
+Route::post("/updatePassword", [UserController::class, "updatePassword"]);
+

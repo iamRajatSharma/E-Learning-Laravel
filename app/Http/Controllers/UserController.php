@@ -115,7 +115,9 @@ class UserController extends Controller{
     }
 
     public function cart(){
-        $cartdata = DB::table("cart")->get();
+        $cartdata = DB::table("cart")
+                        ->where("user_id", Auth::user()->email)
+                        ->get();
         $cartTotoal = 0;
         foreach($cartdata as $cart){
             $cartTotoal += $cart->price;
@@ -141,6 +143,14 @@ class UserController extends Controller{
     }
 
     public function updateAddress(Request $req, $key){
+
+        $req->validate([
+            "address"=> "required",
+            "city"=>"required",
+            "state"=>"required",
+            "pincode"=>"required"
+        ]);
+
         $check = DB::table("address")
                         ->where("id", $key)
                         ->update(["address"=> $req->address, "city"=> $req->city, "state"=> $req->state, "pincode"=> $req->pincode]);
@@ -154,10 +164,52 @@ class UserController extends Controller{
 
     public function change_pass(){
         return view("change_password");
-    } 
+    }
+    
+    public function updatePassword(Request $req){
+
+        $req->validate([
+            "pass1"=> "required",
+            "pass2"=> "required"
+        ]);
+
+        $pass1 = $req->pass1;
+        $pass2 = $req->pass2;
+        $hash_pass = Hash::make($pass1);
+    
+        if($pass1 == $pass2){
+            $update = DB::table("users")
+                        ->where("email", Auth::user()->email)
+                        ->update(["password"=>$hash_pass]);
+            if($update){
+                return back()->with(["alert"=>"alert-success", "message"=>"Password Updated"]);
+            }
+            else{
+                return back()->with(["alert"=>"alert-danger", "message"=>"Something Error"]);
+            }
+        }
+        else{
+            return back()->with(["alert"=>"alert-warning", "message"=>"Password & Confirm-Password not matched"]);
+        }
+    }
 
     public function profile(){
-        return view("profile");
+        $loggedKey = Auth::user()->email;
+        $data = DB::table("users")->where("email", $loggedKey)->get();
+        return view("profile", ["data"=>$data]);
+    }
+
+    public function updateProfile(Request $req){
+        $loggedKey = Auth::user()->email;
+        $data = DB::table("users")
+                        ->where("email", $loggedKey)
+                        ->update(["name"=>$req->name]);
+        if($data){
+            return back()->with(["alert"=>"alert-success", "message"=>"Profile Updated Successfully"]);
+        }
+        else{
+            return back()->with(["alert"=>"alert-danger", "message"=>"Something Error"]);
+        }
     }
     
     public function enrolled_courses(){
@@ -171,14 +223,25 @@ class UserController extends Controller{
         $data->price = $req->price;
         $data->image = $req->img;
         $data->category = $req->cat;
-        $data->user_id = "rajat";
+        $data->user_id = Auth::user()->email;
         $data->date = "12/12/2020";
-        if($data->save()){
-            return redirect()->back();
-        }
-        else{
-            return redirect()->back();
-        }
+        
+        $check_cart = DB::table("cart")
+                            ->where(["user_id"=> Auth::user()->email, "product_id"=>$req->pro_id])
+                            ->get();
+        dd($check_cart);
+        // if($check_cart){
+        //     return back();
+        // }
+        // else{
+        //     if($data->save()){
+        //         return redirect()->back();
+        //     }
+        //     else{
+        //         return redirect()->back();
+        //     }
+        // }
+        
     }
 
     public function saveContact(Request $req){
