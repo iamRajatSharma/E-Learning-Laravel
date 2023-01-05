@@ -66,10 +66,13 @@
                                         <option data-icon="flag flag-us">English US</option>
                                     </select>
                                 </li>
-                                <li><a href="/login">Login</a></li>
-                                <li><a href="/register">Register</a></li>
-                                <li><a href="/profile">Profile</a></li>
-                                <li><a href="/logout">Logout</a></li>
+                                @if (Auth::check())
+                                    <li><a href="/profile">Profile</a></li>
+                                    <li><a href="/logout">Logout</a></li>
+                                @else
+                                    <li><a href="/login">Login</a></li>
+                                    <li><a href="/register">Register</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -142,7 +145,7 @@
             </div>
         </header>
 
-        @yield("content")
+        @yield('content')
 
         <footer>
             <div class="footer-top">
@@ -208,7 +211,8 @@
                                     <div class="widget footer_widget">
                                         <h5 class="footer-title">Get In Touch</h5>
                                         <ul>
-                                            <li><a href="http://educhamp.themetrades.com/admin/index.html">Dashboard</a>
+                                            <li><a
+                                                    href="http://educhamp.themetrades.com/admin/index.html">Dashboard</a>
                                             </li>
                                             <li><a href="/login">Login</a></li>
                                             <li><a href="/register">New Account</a></li>

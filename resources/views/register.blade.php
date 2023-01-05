@@ -30,9 +30,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--[if lt IE 9]>
-	<script src="assets/js/html5shiv.min.js"></script>
-	<script src="assets/js/respond.min.js"></script>
-	<![endif]-->
+ <script src="assets/js/html5shiv.min.js"></script>
+ <script src="assets/js/respond.min.js"></script>
+ <![endif]-->
 
     <!-- All PLUGINS CSS ============================================= -->
     <link rel="stylesheet" type="text/css" href="assets/css/assets.css">
@@ -46,7 +46,14 @@
     <!-- STYLESHEETS ============================================= -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
-
+    <style>
+        .error{
+            font-size: 14px;
+            color: red;
+            font-weight: 700;
+            font-style: italic;
+        }
+    </style>
 </head>
 
 <body id="bg">
@@ -54,42 +61,28 @@
         <div id="loading-icon-bx"></div>
         <div class="account-form">
             <div class="account-head" style="background-image:url(assets/images/background/bg2.jpg);">
-                <a href="index.jsp"><img src="assets/images/logo-white-2.png" alt=""></a>
+                <a href="/"><img src="assets/images/logo-white-2.png" alt=""></a>
             </div>
             <div class="account-form-inner">
                 <div class="account-container">
                     <div class="heading-bx left">
                         <h2 class="title-head">Sign Up <span>Now</span></h2>
-                        <p>Login Your Account <a href="login.jsp">Click here</a></p>
+                        <p>Login Your Account <a href="/login">Click here</a></p>
                     </div>
-                    <form class="contact-bx" action="doRegister" method="post">
+                    <form class="contact-bx" action="/register" method="post">
+                        @csrf
                         <div class="row placeani">
-
-                            <% if(session.getAttribute("success")!= null){ %>
-                            <div class="col-lg-12">
-                                <div class="alert alert-success">
-                                    <strong><%= session.getAttribute("success") %></strong>
+                            @if (Session::has('msg'))
+                                <div class="alert {{ Session::get('alert') }}" style="width: 100%;">
+                                    <strong>{{ Session::get('msg') }}</strong>
                                 </div>
-                            </div>
-                            <% } %>
-
-                            <% if(session.getAttribute("error")!= null){ %>
-                            <div class="col-lg-12">
-                                <div class="alert alert-danger">
-                                    <strong><%= session.getAttribute("error") %></strong>
-                                </div>
-                            </div>
-                            <% } %>
-
-                            <%
-					session.removeAttribute("success");
-					session.removeAttribute("error");
-					%>
+                            @endif
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <label>Your Name</label>
-                                        <input name="name" type="text" required="" class="form-control">
+                                        <input name="name" type="text"  class="form-control"value="{{ old('name') }}">
+                                        @if($errors->has("name"))<span class="error">{{ $errors->first("name") }}</span>@endif
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +90,8 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <label>Your Email Address</label>
-                                        <input name="email" type="email" required="" class="form-control">
+                                        <input name="email" type="email" class="form-control" value="{{ old('email') }}">
+                                        @if($errors->has("email"))<span class="error">{{ $errors->first("email") }}</span>@endif
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +99,8 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <label>Your Password</label>
-                                        <input name="password" type="password" class="form-control" required="">
+                                        <input name="password" type="password" class="form-control">
+                                        @if($errors->has("password"))<span class="error">{{ $errors->first("password") }}</span>@endif
                                     </div>
                                 </div>
                             </div>

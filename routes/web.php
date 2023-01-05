@@ -17,6 +17,10 @@ Route::post("/login", [UserController::class, "doLogin"]);
 
 Route::get("/register", [UserController::class, "register"]);
 
+Route::get("/logout", [UserController::class, "logout"]);
+
+Route::post("/register", [UserController::class, "doRegister"]);
+
 Route::get("/error", [UserController::class, "error"]);
 
 Route::get("/forget_pass", [UserController::class, "forget_pass"]);

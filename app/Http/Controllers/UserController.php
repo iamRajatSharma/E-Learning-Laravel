@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CartModel;
 use App\Models\AddressModel;
+use App\Models\UserModel;
 use DB;
 use Auth;
+use Hash;
+use Session;
 
 class UserController extends Controller{
 
@@ -28,11 +31,14 @@ class UserController extends Controller{
     } 
 
     public function login(){
+        if(Auth::check()){
+            return redirect("/");
+        }
         return view("login");
     }
     
     public function doLogin(Request $req){
-        
+
         $validate = $req->validate([
             "email"=> "required",
             "password"=>"required"
@@ -41,7 +47,6 @@ class UserController extends Controller{
         $credential = $req->only("email", "password");
 
         if(Auth::attempt($credential)){
-        // if(Auth::attempt(["email"=>$req->email, "password"=>$req->password])){
             return redirect('/');
         }
         else{
@@ -52,6 +57,31 @@ class UserController extends Controller{
     public function register(){
         return view("register");
     } 
+
+    public function doRegister(Request $req){
+        $validate = $req->validate([
+            "name"=> "required",
+            "email"=> "required",
+            "password"=>"required"
+        ]);
+
+        $user = new UserModel;
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->password = Hash::make($req->password);
+        if($user->save()){
+            return back()->with(['msg'=> 'Account Created Succesfully', "alert"=>"alert-success"]);
+        }
+        else{
+            return back()->with(['msg', 'Something Wrong', "alert"=>"alert-danger"]);
+        }
+    } 
+
+    public function logout(){
+        Auth::logout();
+        Session::flush();
+        return redirect("/");
+    }
 
     public function error(){
         return view("error");
