@@ -56,4 +56,3 @@ Route::post("/updateAddress/{id}", [UserController::class, "updateAddress"]);
 Route::post("/updateAddress/{id}", [UserController::class, "updateAddress"]);
 
 Route::post("/updatePassword", [UserController::class, "updatePassword"]);
-

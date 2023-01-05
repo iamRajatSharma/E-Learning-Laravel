@@ -270,8 +270,6 @@ class UserController extends Controller{
         else{
             return back()->with(["alert"=>"alert-danger", "message"=>"Something Wrong"]);
         }
-
-
     }
 
     public function deleteCart($key){

@@ -74,7 +74,8 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Name</label>
-                                            <input name="name" type="text" class="form-control" value="{{ old('name') }}">
+                                            <input name="name" type="text" class="form-control"
+                                                value="{{ old('name') }}">
                                             @if ($errors->has('name'))
                                                 <span class="error">{{ $errors->first('name') }}</span>
                                             @endif
@@ -85,7 +86,8 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Email Address</label>
-                                            <input name="email" type="email" class="form-control" value="{{ old('email') }}">
+                                            <input name="email" type="email" class="form-control"
+                                                value="{{ old('email') }}">
                                             @if ($errors->has('email'))
                                                 <span class="error">{{ $errors->first('email') }}</span>
                                             @endif
@@ -96,7 +98,8 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Phone</label>
-                                            <input name="mobile" type="text" class="form-control" value="{{ old('mobile') }}">
+                                            <input name="mobile" type="text" class="form-control"
+                                                value="{{ old('mobile') }}">
                                             @if ($errors->has('mobile'))
                                                 <span class="error">{{ $errors->first('mobile') }}</span>
                                             @endif
@@ -107,7 +110,8 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Subject</label>
-                                            <input name="subject" type="text" class="form-control" value="{{ old('suvject') }}">
+                                            <input name="subject" type="text" class="form-control"
+                                                value="{{ old('subject') }}">
                                             @if ($errors->has('subject'))
                                                 <span class="error">{{ $errors->first('subject') }}</span>
                                             @endif
