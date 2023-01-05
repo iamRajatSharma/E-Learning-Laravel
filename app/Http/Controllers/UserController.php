@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CartModel;
 use App\Models\AddressModel;
 use App\Models\UserModel;
+use App\Models\ContactModel;
 use DB;
 use Auth;
 use Hash;
@@ -217,6 +218,7 @@ class UserController extends Controller{
     }
 
     public function saveCart(Request $req){
+
         $data = new CartModel();
         $data->product_id = $req->pro_id;
         $data->product_title = $req->pro_title;
@@ -226,21 +228,22 @@ class UserController extends Controller{
         $data->user_id = Auth::user()->email;
         $data->date = "12/12/2020";
         
+        DB::enableQueryLog();
         $check_cart = DB::table("cart")
                             ->where(["user_id"=> Auth::user()->email, "product_id"=>$req->pro_id])
-                            ->get();
-        dd($check_cart);
-        // if($check_cart){
-        //     return back();
-        // }
-        // else{
-        //     if($data->save()){
-        //         return redirect()->back();
-        //     }
-        //     else{
-        //         return redirect()->back();
-        //     }
-        // }
+                            ->count();
+
+        if($check_cart){
+            return back();
+        }
+        else{
+            if($data->save()){
+                return redirect()->back();
+            }
+            else{
+                return redirect()->back();
+            }
+        }
         
     }
 
@@ -250,9 +253,33 @@ class UserController extends Controller{
             "name"=>"required",
             "email"=>"required",
             "mobile"=>"required",
-            "subject"=>"subject",
-            "message"=>"message"
+            "subject"=>"required",
+            "message"=>"required"
         ]);
 
+        $data = new ContactModel;
+        $data->name = $req->name;
+        $data->email = $req->email;
+        $data->mobile = $req->mobile;
+        $data->subject = $req->subject;
+        $data->message = $req->message;
+        $data->date = date("d/m/Y");
+        if($data->save()){
+            return back()->with(["alert"=>"alert-success", "message"=>"Contact Form Saved"]);
+        }
+        else{
+            return back()->with(["alert"=>"alert-danger", "message"=>"Something Wrong"]);
+        }
+
+
     }
+
+    public function deleteCart($key){
+        $data = DB::table("cart")
+                    ->where("id", $key)
+                    ->delete();
+        return back();
+    }
+
+
 }

@@ -1,11 +1,11 @@
 @extends('include/layout')
 
 @section('content')
-<style>
-    .price{
-        float: right;
-    }
-</style>
+    <style>
+        .price {
+            float: right;
+        }
+    </style>
     <div class="page-content bg-white">
         <div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner3.jpg);">
             <div class="container">
@@ -54,10 +54,7 @@
                                             <td>{{ $item->category }}</td>
                                             <td>{{ $item->price }}</td>
                                             <td>
-                                                <form action="deleteCartItem" method="post">
-                                                    <input type="hidden" name="delId" value="<%= i.getProduct_id() %>">
-                                                    <button class="btn btn-primary">Delete</button>
-                                                </form>
+                                                <a href="/deleteCart/{{ $item->id }}" class="btn btn-primary">Delete</a>
                                             </td>
                                         </tr>
                                         @php
@@ -70,9 +67,12 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="checkout">
-                                <div><b>Total Price : </b> <span class="price"><i class="fa fa-inr"></i> {{ $cartTotal }}</span></div>
-                                <div class="mt-2"><b>Shipping Charge :</b> <span class="price"><i class="fa fa-inr"></i> 0</span></div>
-                                <div class="mt-2"><b>Total Price :</b> <span class="price"><i class="fa fa-inr"></i>{{ $cartTotal }}</span></div><br>
+                                <div><b>Total Price : </b> <span class="price"><i class="fa fa-inr"></i>
+                                        {{ $cartTotal }}</span></div>
+                                <div class="mt-2"><b>Shipping Charge :</b> <span class="price"><i class="fa fa-inr"></i>
+                                        0</span></div>
+                                <div class="mt-2"><b>Total Price :</b> <span class="price"><i
+                                            class="fa fa-inr"></i>{{ $cartTotal }}</span></div><br>
                                 <hr><a href="/checkout" class="btn btn-danger btn-block">Checkout</a>
                             </div>
                         </div>

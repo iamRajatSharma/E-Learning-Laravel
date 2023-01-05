@@ -49,6 +49,8 @@ Route::post("/contact", [UserController::class, "saveContact"]);
 
 Route::post("/saveCart", [UserController::class, "saveCart"]);
 
+Route::get("/deleteCart/{id}", [UserController::class, "deleteCart"]);
+
 Route::post("/updateAddress/{id}", [UserController::class, "updateAddress"]);
 
 Route::post("/updateAddress/{id}", [UserController::class, "updateAddress"]);
