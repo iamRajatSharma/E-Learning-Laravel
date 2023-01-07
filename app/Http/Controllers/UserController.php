@@ -101,7 +101,7 @@ class UserController extends Controller{
 
     public function courses(){
         $title = "Courses";
-        $courses = DB::table("courses")->get();
+        $courses = DB::table("course")->get();
         return view("courses", ["course"=>$courses, "title"=>$title]);
     }
 

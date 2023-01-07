@@ -36,9 +36,16 @@
                                         <div class="profile-head">
                                             <h3>Edit Profile</h3>
                                         </div>
+                                        @if (Session::has('message'))
+                                            <div class="alert {{ Session::get('alert') }}">
+                                                <strong>{{ Session::get('message') }}</strong>
+                                            </div>
+                                        @endif
+
                                         @foreach ($data as $item)
                                             <form class="edit-profile" action="/profile" method="POST">
                                                 @csrf
+
                                                 <div class="">
                                                     <div class="form-group row">
                                                         <div class="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
@@ -58,8 +65,8 @@
                                                         <label
                                                             class="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">Email</label>
                                                         <div class="col-12 col-sm-9 col-md-9 col-lg-7">
-                                                            <input class="form-control" type="email" value="{{ $item->email }}"
-                                                                readonly>
+                                                            <input class="form-control" type="email"
+                                                                value="{{ $item->email }}" readonly>
                                                         </div>
                                                     </div>
                                                     <div
