@@ -45,6 +45,8 @@ Route::post("/profile", [UserController::class, "updateProfile"]);
 
 Route::get("/enrolled_courses", [UserController::class, "enrolled_courses"]);
 
+Route::get("/video/{id}", [UserController::class, "video"]);
+
 Route::post("/contact", [UserController::class, "saveContact"]);
 
 Route::post("/saveCart", [UserController::class, "saveCart"]);

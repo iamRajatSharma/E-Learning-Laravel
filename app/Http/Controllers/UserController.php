@@ -15,27 +15,32 @@ use Session;
 class UserController extends Controller{
 
     public function index(){
+        $title = "Welcome";
         $data = DB::table("course")->get();
-        return view("index", ["courses"=>$data]);
+        return view("index", ["courses"=>$data, "title"=>$title]);
     } 
     
     public function contact(){
-        return view("contact");
+        $title = "Contact";
+        return view("contact", ["title"=> $title]);
     } 
 
     public function about(){
-        return view("about");
+        $title = "About";
+        return view("about", ["title"=>$title]);
     } 
 
     public function faqs(){
-        return view("faqs");
+        $title = "FAQ's";
+        return view("faqs", ["title"=>$title]);
     } 
 
     public function login(){
+        $Login = "Welcome";
         if(Auth::check()){
             return redirect("/");
         }
-        return view("login");
+        return view("login", ["title"=>$title]);
     }
     
     public function doLogin(Request $req){
@@ -56,7 +61,8 @@ class UserController extends Controller{
     }
 
     public function register(){
-        return view("register");
+        $title = "Registeration Page";
+        return view("register", ["title"=>$title]);
     } 
 
     public function doRegister(Request $req){
@@ -89,20 +95,24 @@ class UserController extends Controller{
     } 
 
     public function forget_pass(){
-        return view("forget_pass");
+        $title = "Forget Password";
+        return view("forget_pass", ["title"=>$title]);
     } 
 
     public function courses(){
+        $title = "Courses";
         $courses = DB::table("courses")->get();
-        return view("courses", ["course"=>$courses]);
+        return view("courses", ["course"=>$courses, "title"=>$title]);
     }
 
     public function course_details($id){
+        $title = "Welcome Details";
         $course = DB::table("course")->find(["id"=>$id]);
-        return view("course_details", ["course"=>$course]);
+        return view("course_details", ["course"=>$course, "title"=>$title]);
     }
 
     public function search(Request $req){
+        $title = "Search";
         $key = $req->name;
         if($key==null){
             $courses = DB::table("course")->get();
@@ -112,10 +122,11 @@ class UserController extends Controller{
                             ->where("title", "like", "%".$key."%")
                             ->get();
         }
-        return view("search", ["courses"=>$courses, "key"=>$key]);
+        return view("search", ["courses"=>$courses, "key"=>$key, "title"=>$title]);
     }
 
     public function cart(){
+        $title = "Cart";
         $cartdata = DB::table("cart")
                         ->where("user_id", Auth::user()->email)
                         ->get();
@@ -123,10 +134,11 @@ class UserController extends Controller{
         foreach($cartdata as $cart){
             $cartTotoal += $cart->price;
         }
-        return view("cart", ["cart"=>$cartdata, "cartTotal"=>$cartTotoal]);
+        return view("cart", ["cart"=>$cartdata, "cartTotal"=>$cartTotoal, "title"=>$title]);
     }
 
     public function checkout(){
+        $title = "Checkout";
         $getAddress = AddressModel::getAddress();
 
         $cartdata = DB::table("cart")->get();
@@ -135,12 +147,13 @@ class UserController extends Controller{
             $cartTotoal += $cart->price;
         }
 
-        return view("checkout", ["address"=>$getAddress, "cartTotal"=>$cartTotoal]);
+        return view("checkout", ["address"=>$getAddress, "cartTotal"=>$cartTotoal, "title"=>$title]);
     }
 
     public function address(){
+        $title = "Address";
         $getAddress = AddressModel::getAddress();
-        return view("address", ["address"=> $getAddress]);
+        return view("address", ["address"=> $getAddress, "title"=>$title]);
     }
 
     public function updateAddress(Request $req, $key){
@@ -164,7 +177,8 @@ class UserController extends Controller{
     }
 
     public function change_pass(){
-        return view("change_password");
+        $title = "Change Password";
+        return view("change_password", ["title"=>$title]);
     }
     
     public function updatePassword(Request $req){
@@ -195,9 +209,10 @@ class UserController extends Controller{
     }
 
     public function profile(){
+        $title = "Profile";
         $loggedKey = Auth::user()->email;
         $data = DB::table("users")->where("email", $loggedKey)->get();
-        return view("profile", ["data"=>$data]);
+        return view("profile", ["data"=>$data, "title"=>$title]);
     }
 
     public function updateProfile(Request $req){
@@ -214,7 +229,12 @@ class UserController extends Controller{
     }
     
     public function enrolled_courses(){
-        return view("enrolled_courses");
+        $title = "Enrolled Courses";
+        $loggedKey = Auth::user()->email;
+        $data = DB::table("enroll")
+                    ->where("enroll_email", $loggedKey)
+                    ->get();
+        return view("enrolled_courses", ["title"=>$title, "data"=>$data]);
     }
 
     public function saveCart(Request $req){
@@ -279,5 +299,13 @@ class UserController extends Controller{
         return back();
     }
 
+
+    public function video($id){
+        $title = "Play Video";
+        $data = DB::table("video")
+                    ->where("course_id", $id)
+                    ->get();
+        return view("video", ["data"=>$data, "title"=>$title]);
+    }
 
 }

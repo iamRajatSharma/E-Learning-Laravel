@@ -13,7 +13,7 @@
         <div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner1.jpg);">
             <div class="container">
                 <div class="page-banner-entry">
-                    <h1 class="text-white">Profile</h1>
+                    <h1 class="text-white">Change Password</h1>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div class="container">
                 <ul class="list-inline">
                     <li><a href="/">Home</a></li>
-                    <li>Profile</li>
+                    <li>Change Password</li>
                 </ul>
             </div>
         </div>

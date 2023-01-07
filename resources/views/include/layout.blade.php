@@ -24,7 +24,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.png" />
 
     <!-- PAGE TITLE HERE ============================================= -->
-    <title>EduChamp : Education HTML Template </title>
+    <title>{{ $title }} | E-learningn Platform</title>
 
     <!-- MOBILE SPECIFIC ============================================= -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,14 +119,12 @@
                                 <li class="active"><a href="/about">About</a></li>
                                 <li class="active"><a href="/faqs">Faq's</a></li>
                                 <li class="active"><a href="/contact#contact">Contact Us</a></li>
-                                <li class="add-mega-menu"><a href="javascript:;">Our
-                                        Courses <i class="fa fa-chevron-down"></i>
-                                    </a>
+                                <li class="add-mega-menu">
+                                    <a href="javascript:;">Our Courses <i class="fa fa-chevron-down"></i> </a>
                                     <ul class="sub-menu add-menu">
                                         <li class="add-menu-left">
                                             <ul>
                                                 <li><a href="courses?name=all">All Courses</a></li>
-
                                                 <li><a href="courses?name=<%= i.getName() %>"><%= i.getName() %></a>
                                                 </li>
                                             </ul>
