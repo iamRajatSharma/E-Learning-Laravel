@@ -36,7 +36,7 @@ class UserController extends Controller{
     } 
 
     public function login(){
-        $Login = "Welcome";
+        $title = "Login Page";
         if(Auth::check()){
             return redirect("/");
         }
@@ -99,10 +99,13 @@ class UserController extends Controller{
         return view("forget_pass", ["title"=>$title]);
     } 
 
-    public function courses(){
-        $title = "Courses";
-        $courses = DB::table("course")->get();
-        return view("courses", ["course"=>$courses, "title"=>$title]);
+    public function courses(Request $req){
+        $key = $req->name;
+        $title = "Search Courses";
+        $courses = DB::table("course")
+                    ->where("category", "like", "%". $key ."%")
+                    ->get();
+        return view("courses", ["courses"=>$courses, "title"=>$title, "key"=>$key]);
     }
 
     public function course_details($id){
@@ -125,6 +128,21 @@ class UserController extends Controller{
         return view("search", ["courses"=>$courses, "key"=>$key, "title"=>$title]);
     }
 
+    public static function countCartItem(){
+        $cartdata = DB::table("cart")
+                        ->where("user_id", Auth::user()->email)
+                        ->get()
+                        ->count();
+        return $cartdata;
+    }
+
+    public static function getCategoryName(){
+        $catName = DB::table("category")
+                        ->select("name")
+                        ->get();
+        return $catName;
+    }
+
     public function cart(){
         $title = "Cart";
         $cartdata = DB::table("cart")
@@ -138,6 +156,7 @@ class UserController extends Controller{
     }
 
     public function checkout(){
+
         $title = "Checkout";
         $getAddress = AddressModel::getAddress();
 

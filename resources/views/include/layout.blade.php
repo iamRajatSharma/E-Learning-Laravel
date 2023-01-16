@@ -1,3 +1,9 @@
+<?php
+use App\Http\Controllers\UserController;
+$cart_item = UserController::countCartItem();
+$catName = UserController::getCategoryName();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -93,7 +99,7 @@
                             <div class="secondary-inner">
                                 <ul>
                                     <li><a href="/cart" class="btn-link"><i class="fa fa-shopping-cart"></i></a><span
-                                            style="position: absolute; margin-top: -5px;">0</span>
+                                            style="position: absolute; margin-top: -5px;">{{ $cart_item }}</span>
                                     </li>
                                     <li class="search-btn"><button id="quik-search-btn" type="button" class="btn-link">
                                             <i class="fa fa-search"></i>
@@ -125,8 +131,11 @@
                                         <li class="add-menu-left">
                                             <ul>
                                                 <li><a href="courses?name=all">All Courses</a></li>
-                                                <li><a href="courses?name=<%= i.getName() %>"><%= i.getName() %></a>
+                                                @foreach($catName as $cat)
+                                                <li>
+                                                    <a href="courses?name={{ $cat->name; }}">{{ $cat->name; }}</a>
                                                 </li>
+                                                @endforeach
                                             </ul>
                                         </li>
                                     </ul>
